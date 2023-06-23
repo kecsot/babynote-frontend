@@ -1,8 +1,9 @@
+import TestPage from "./pages/auth/TestPage"
 
 function App() {
   return (
     <>
-      <div>App</div>
+      <TestPage/>
     </>
   )
 }
