@@ -1,8 +1,8 @@
 import { ID, Models } from "appwrite";
 import { BaseResource } from "./BaseResource"; 
 import { BaseList, BaseType, IBaseModel } from "../../types";
-import { RestQuery, RestQueryType } from "../../appwrite/RestQuery";
-import { databases } from "../../appwrite/appwrite";
+import { RestQuery, RestQueryType } from "./RestQuery";
+import { databases } from "../../appwrite";
 
 export abstract class BaseRestResource<B extends IBaseModel, T extends BaseType> extends BaseResource {
 
