@@ -1,43 +1,54 @@
-import { useEffect } from "react"
+
+import { useRecoilValue } from "recoil"
 import { babyResource } from "../../api/resource"
 import { BabyModel, BabyType } from "../../api/types"
-import { useRecoilState } from "recoil"
+import useResourceConnectedToAtom from "../../hooks/useResourceConnectedToAtom"
 import { babyListAtom } from "../../state/baby"
+import { useEffect } from "react"
 
 function TestPage() {
-    const [allItem, setAllItem] = useRecoilState(babyListAtom)
+    const {
+        fetchAllItems, isFetchAllLoading,
+        fetchList, isFetchListLoading,
+        createItem, isCreateLoading, 
+        updateItem, isUpdateLoading,
+        deleteItem, isDeleteLoading,
+        refreshItem, isRefreshLoading
+    } = useResourceConnectedToAtom(babyResource, babyListAtom)
 
+    const list = useRecoilValue(babyListAtom)
+    
     useEffect(() => {
-        handleReadAll()
+        fetchAllItems()
+            .then((result) => {
+                console.log(result)
+            })
     }, [])
 
-    const handleReadAll = () => {
-        babyResource.getAllItems()
-            .then((res) => {
-                console.log(res)
-                setAllItem(res.data)
+    const handleRefresh = (item: BabyType) => {
+        refreshItem(item)
+            .then((result) => {
+                console.log(result)
             })
-            .catch((err) => console.log(err))
     }
 
     const handleAddItem = () => {
+
+        let reverseList = (list: BabyType[]) => {
+            return list.reverse();
+        }
+
         const item : BabyModel = { name: 'hi'} 
-        babyResource.addItem(item)
-            .then((item) => {
-                setAllItem((prev) => {
-                    return [...prev, item]
-                })
+        createItem(item, reverseList)
+            .then((result) => {
+                console.log(result)
             })
     }
 
     const handleRemove = (item: BabyType) => {
-        babyResource.deleteItem(item.id)
-            .then((success) => {
-                if(success){
-                    setAllItem((prev) => {
-                        return prev.filter(x => x.id !== item.id)
-                    })
-                }
+        deleteItem(item)
+            .then((result) => {
+                console.log(result)
             })
     }
 
@@ -47,13 +58,9 @@ function TestPage() {
             name : Math.random().toString()
         }
 
-        babyResource.updateItem(newItem)
+        updateItem(newItem)
             .then((result) => {
-                if(result){
-                    setAllItem((prev) => {
-                        return prev.map(x => x.id === item.id ? result : x)
-                    })
-                }
+                console.log(result)
             })
     }
 
@@ -68,12 +75,20 @@ function TestPage() {
 
     return (
         <>
-            {allItem && allItem.map((item) => {
+            {isFetchAllLoading && <div>Fetching All...</div>}
+            {isFetchListLoading && <div>Fetching List...</div>}
+            {isCreateLoading && <div>Creating...</div>}
+            {isUpdateLoading && <div>Updating...</div>}
+            {isDeleteLoading && <div>Deleting...</div>}
+            {isRefreshLoading && <div>Refreshing...</div>}
+
+            {list.map((item) => {
                 return (
                     <div key={item.id}>
                         {item.id} | {item.name}
                         <div onClick={() => {handleUpdate(item)}}>Update</div>
                         <div onClick={() => {handleRemove(item)}}>Remove</div>
+                        <div onClick={() => {handleRefresh(item)}}>Refresh</div>
                     </div>
                     
                 )
