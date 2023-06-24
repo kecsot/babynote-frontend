@@ -34,7 +34,7 @@ function TestPage() {
 
     const handleAddItem = () => {
 
-        let reverseList = (list: BabyType[]) => {
+        let reverseList = (list: BabyType[], added: BabyType) => {
             return list.reverse();
         }
 
