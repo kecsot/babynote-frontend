@@ -94,7 +94,7 @@ export abstract class BaseRestResource<B extends IBaseModel, T extends BaseType>
         })
     }
 
-    addItem(item: B): Promise<T> {
+    createItem(item: B): Promise<T> {
         return databases.createDocument(
             this.databaseId,
             this.collectionId,
