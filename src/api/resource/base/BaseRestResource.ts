@@ -104,7 +104,7 @@ export abstract class BaseRestResource<B extends IBaseModel, T extends BaseType>
     }
 
     updateItem(item: T): Promise<T> {
-        // TODO: Remove all 'B' key from item: 'T'
+        // TODO: Remove all 'BaseType' key from item: 'T'
         const data = item
 
         return databases.updateDocument(
