@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { babyResource } from "../../api/resource"
 import { BabyModel, BabyType } from "../../api/types"
+import { useRecoilState } from "recoil"
+import { babyListAtom } from "../../state/baby"
 
 function TestPage() {
-    const [allItem, setAllItem] = useState<BabyType[]>([])
+    const [allItem, setAllItem] = useRecoilState(babyListAtom)
 
     useEffect(() => {
         handleReadAll()
@@ -40,9 +42,12 @@ function TestPage() {
     }
 
     const handleUpdate = (item: BabyType) => {
-        item.name += '+'
+        const newItem = {
+            ...item,
+            name : Math.random().toString()
+        }
 
-        babyResource.updateItem(item)
+        babyResource.updateItem(newItem)
             .then((result) => {
                 if(result){
                     setAllItem((prev) => {
