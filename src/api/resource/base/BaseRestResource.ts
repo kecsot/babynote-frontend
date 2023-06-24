@@ -17,6 +17,18 @@ export abstract class BaseRestResource<B extends IBaseModel, T extends BaseType>
 
         return this.appendPropertiesToBaseType(baseType, item)
     }
+    
+    /**
+     * @issue https://stackoverflow.com/questions/43909566/get-keys-of-a-typescript-interface-as-array-of-strings
+     * Would be nice some dinamically solution without 3rd party dependency
+     * 
+     * @param item 
+     * @returns 
+     */
+    removeBaseTypeKeys(item: T) {
+        const {id, createdAt, updatedAt, ...rest} = item;
+        return rest;
+    }
 
     getList(page: number = 0, limit: number = 25, queries: RestQueryType[] = []): Promise<BaseList<T>> {
         let queryStrings = [
@@ -104,8 +116,7 @@ export abstract class BaseRestResource<B extends IBaseModel, T extends BaseType>
     }
 
     updateItem(item: T): Promise<T> {
-        // TODO: Remove all 'BaseType' key from item: 'T'
-        const data = item
+        const data = this.removeBaseTypeKeys(item)
 
         return databases.updateDocument(
             this.databaseId,
