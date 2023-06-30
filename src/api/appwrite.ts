@@ -1,9 +1,8 @@
 import { Client, Databases } from 'appwrite';
 
-// TODO: env
 const client = new Client()
-    .setEndpoint('http://localhost:8089/v1') 
-    .setProject('6495f54f096521a23f40');
+    .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT || '')
+    .setProject(import.meta.env.VITE_APPWRITE_PROJECT || '');
 
 const databases = new Databases(client);
 
