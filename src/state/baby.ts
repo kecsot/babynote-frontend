@@ -6,3 +6,7 @@ export const babyListAtom = atom<BabyType[]>({
     default: [],
 });
 
+export const nameFilterAtom = atom<string>({
+    key: 'nameFilterAtom',
+    default: '',
+});
