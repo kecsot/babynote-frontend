@@ -28,9 +28,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }, [])
 
-    const loginWithGoogle = () => account.createOAuth2Session('google', 
-    loginSuccessCallbackUrl, 
-        loginFailedCallbackUrl)
+    const loginWithGoogle = () => account.createOAuth2Session('google', loginSuccessCallbackUrl, loginFailedCallbackUrl)
 
     const logoutClient = () => setUser(null)
 
