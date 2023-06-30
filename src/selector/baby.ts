@@ -9,6 +9,10 @@ const filteredBabyListSelector: RecoilValueReadOnly<BabyType[]> = selector({
         const babyList = get(babyListAtom);
         const nameFilter = get(nameFilterAtom);
 
+        if (nameFilter == null) {
+            return babyList;
+        }
+
         return babyList.filter((x) => x.name.includes(nameFilter))
     },
 });
