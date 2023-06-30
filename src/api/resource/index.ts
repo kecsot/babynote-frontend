@@ -1,8 +1,7 @@
 import { BabyResource } from "./BabyResource";
 
-// TODO: env
-const babyResource = new BabyResource('6495f557a6e9a2dee239','6495f57502fd31be24a2')
+const databaseId = import.meta.env.VITE_APPWRITE_DATABASE || ''
+const babyCollectionId = import.meta.env.VITE_APPWRITE_BABY_COLLECTION || ''
 
-export {
-    babyResource
-}
+
+export const babyResource = new BabyResource(databaseId, babyCollectionId)
