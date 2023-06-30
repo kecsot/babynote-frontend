@@ -1,30 +1,26 @@
 
 import { useAuthContext } from "../../auth/useAuthContext";
 
-function LoginPage() { 
-    const {isLoggedIn} = useAuthContext();
+function LoginPage() {
+    const { isInitialized, logout, isLoggedIn, user, loginWithGoogle } = useAuthContext();
 
-    const handleLogin = () => {
-        
-    }
+    if (!isInitialized) return <div>Loading...</div>
 
-    const handleLogout = () => {
-        
-    }
-
-    if(isLoggedIn){
-        return (
-            <>
-                <div>You are logged IN!</div>
-                <div onClick={handleLogout}>Logout</div>
-            </>
-        )
-    }
-    
     return (
         <>
-            <div>You are logged OUT!</div>
-            <div onClick={handleLogin}>Login</div>
+            {isLoggedIn &&
+                <>
+                    <div>You are logged IN as ({user.name}) !</div>
+                    <div onClick={logout}>Logout</div>
+                </>
+            }
+
+            {!isLoggedIn &&
+                <>
+                    <div>You are logged OUT!</div>
+                    <div onClick={loginWithGoogle}>Google Login</div>
+                </>
+            }
         </>
     )
 }
