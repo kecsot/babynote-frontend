@@ -1,6 +1,6 @@
 import { RecoilRoot } from "recoil"
 import { AuthProvider } from "./auth/AuthProvider"
-import ExamplePage from "./pages/auth/ExamplePage"
+import ExamplePage from "./pages/ExamplePage"
 import { ErrorBoundary } from "react-error-boundary"
 import ErrorFallbackPage from "./pages/ErrorFallbackPage"
 
